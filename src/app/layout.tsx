@@ -1,3 +1,4 @@
+import "@/lib/config";
 import type { Metadata } from "next";
 import { Outfit, Playfair_Display } from "next/font/google";
 import "./globals.css";

@@ -22,6 +22,12 @@ if (typeof window === "undefined") {
     nextAuthUrl = `https://${nextAuthUrl.trim()}`;
   }
 
+  // Globally write back normalized URLs so next-auth and other packages read a valid URL
+  process.env.NEXTAUTH_URL = nextAuthUrl;
+  if (!process.env.NEXT_PUBLIC_APP_URL || process.env.NEXT_PUBLIC_APP_URL.trim() === "") {
+    process.env.NEXT_PUBLIC_APP_URL = nextAuthUrl;
+  }
+
   // Provide safe build-time fallbacks to prevent Next.js build-phase crashes
   const parsed = envSchema.safeParse({
     MONGODB_URI: process.env.MONGODB_URI || "mongodb://localhost:27017/dua-build-placeholder",
