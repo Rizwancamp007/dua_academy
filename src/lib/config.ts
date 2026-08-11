@@ -10,11 +10,24 @@ const envSchema = z.object({
 let env: z.infer<typeof envSchema>;
 
 if (typeof window === "undefined") {
+  // Normalize NEXTAUTH_URL with protocol support and Vercel fallbacks
+  let nextAuthUrl = process.env.NEXTAUTH_URL;
+  if (!nextAuthUrl) {
+    if (process.env.VERCEL_URL) {
+      nextAuthUrl = `https://${process.env.VERCEL_URL}`;
+    } else {
+      nextAuthUrl = "http://localhost:3000";
+    }
+  } else if (!nextAuthUrl.startsWith("http://") && !nextAuthUrl.startsWith("https://")) {
+    nextAuthUrl = `https://${nextAuthUrl}`;
+  }
+
+  // Provide safe build-time fallbacks to prevent Next.js build-phase crashes
   const parsed = envSchema.safeParse({
-    MONGODB_URI: process.env.MONGODB_URI,
-    NEXTAUTH_SECRET: process.env.NEXTAUTH_SECRET,
-    NEXTAUTH_URL: process.env.NEXTAUTH_URL,
-    GEMINI_API_KEY: process.env.GEMINI_API_KEY,
+    MONGODB_URI: process.env.MONGODB_URI || "mongodb://localhost:27017/dua-build-placeholder",
+    NEXTAUTH_SECRET: process.env.NEXTAUTH_SECRET || "build-time-nextauth-secret-placeholder-string",
+    NEXTAUTH_URL: nextAuthUrl,
+    GEMINI_API_KEY: process.env.GEMINI_API_KEY || "build-time-gemini-api-key-placeholder",
   });
 
   if (!parsed.success) {
