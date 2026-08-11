@@ -35,14 +35,17 @@ export default async function StudentTestRunnerPage({ params, searchParams }: Pa
     notFound();
   }
 
-  const questions = ((dbTest as any).mcqRefs || []).map((q: any) => ({
-    _id: q._id.toString(),
-    questionText: q.question,
-    options: q.options || [],
-    correctOptionIndex: q.correctIndex,
-    explanation: q.explanation || "",
-    subjectName: (dbTest as any).subjectRef?.name || "General",
-  }));
+  const rawQuestions = (dbTest as any).mcqRefs || [];
+  const questions = rawQuestions
+    .filter((q: any) => q !== null && q !== undefined)
+    .map((q: any) => ({
+      _id: q._id ? q._id.toString() : "",
+      questionText: q.question || "",
+      options: q.options || [],
+      correctOptionIndex: typeof q.correctIndex === "number" ? q.correctIndex : 0,
+      explanation: q.explanation || "",
+      subjectName: (dbTest as any).subjectRef?.name || "General",
+    }));
 
   return (
     <div className="space-y-6">

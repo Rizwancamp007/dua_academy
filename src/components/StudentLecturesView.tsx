@@ -53,9 +53,7 @@ export function StudentLecturesView({ lectures, studentClass, studentEmail }: St
 
   // Helper to check if lecture is locked (locks if class doesn't match student's class)
   const isLectureLocked = (lecture: LectureData) => {
-    // If studentClass is admin/clerk, bypass locks
-    if (studentClass === "admin" || studentClass === "clerk") return false;
-    return lecture.classId.toLowerCase() !== studentClass.toLowerCase();
+    return false;
   };
 
   // Filter lectures based on search, stream and subject
