@@ -4,7 +4,7 @@ import { redirect, notFound } from "next/navigation";
 import dbConnect from "@/lib/dbConnect";
 import Test from "@/models/Test";
 import MCQ from "@/models/MCQ"; // Register MCQ schema
-import "@/models/Subject"; // Register Subject schema
+import Subject from "@/models/Subject"; // Register Subject schema
 import StudentTestRunner from "@/components/StudentTestRunner";
 
 export const dynamic = "force-dynamic";
@@ -29,6 +29,9 @@ export default async function StudentTestRunnerPage({ params, searchParams }: Pa
     const mode = resolvedSearchParams.mode === "practice" ? "practice" : "test";
 
     await dbConnect();
+
+    // Prevent Webpack tree-shaking
+    const _modelReg = [MCQ.modelName, Subject.modelName];
 
     // Retrieve test and populate questions
     const dbTest = await Test.findById(testId).populate("mcqRefs").populate("subjectRef").lean();

@@ -4,7 +4,7 @@ import { redirect, notFound } from "next/navigation";
 import dbConnect from "@/lib/dbConnect";
 import Attempt from "@/models/Attempt";
 import MCQ from "@/models/MCQ"; // Register MCQ schema
-import "@/models/Subject"; // Register Subject schema
+import Subject from "@/models/Subject"; // Register Subject schema
 import StudentResultDetailView from "@/components/StudentResultDetailView";
 
 export const dynamic = "force-dynamic";
@@ -24,6 +24,9 @@ export default async function StudentResultDetailPage({ params }: PageProps) {
   const userId = (session.user as any).id;
 
   await dbConnect();
+
+  // Prevent Webpack tree-shaking
+  const _modelReg = [MCQ.modelName, Subject.modelName];
 
   // Find the attempt
   const attempt = await Attempt.findById(attemptId)
