@@ -84,6 +84,7 @@ export default async function StudentResultDetailPage({ params }: PageProps) {
         durationSeconds={(attempt as any).durationSeconds || 0}
         mode={(attempt as any).mode || "practice"}
         questions={questionsList}
+        showAnswersAtEnd={test.showAnswersAtEnd !== false}
       />
     </div>
   );

@@ -27,6 +27,7 @@ interface ResultDetailProps {
   durationSeconds: number;
   mode: string;
   questions: ReviewQuestion[];
+  showAnswersAtEnd?: boolean;
 }
 
 export function StudentResultDetailView({
@@ -39,6 +40,7 @@ export function StudentResultDetailView({
   durationSeconds,
   mode,
   questions,
+  showAnswersAtEnd = true,
 }: ResultDetailProps) {
   const [filter, setFilter] = useState<"all" | "correct" | "incorrect">("all");
 
@@ -159,28 +161,30 @@ export function StudentResultDetailView({
       </Card>
 
       {/* Filter Tabs */}
-      <div className="flex items-center justify-between border-b border-border/60 pb-3">
-        <div className="flex gap-2">
-          {(["all", "correct", "incorrect"] as const).map((type) => (
-            <button
-              key={type}
-              onClick={() => setFilter(type)}
-              className={`px-4 py-2 text-sm font-semibold capitalize rounded-lg transition-all cursor-pointer ${
-                filter === type
-                  ? "bg-primary text-white"
-                  : "text-text/65 hover:bg-border/20 hover:text-text"
-              }`}
-            >
-              {type} ({type === "all" ? questions.length : type === "correct" ? questions.filter(q => q.isCorrect).length : questions.filter(q => !q.isCorrect).length})
-            </button>
-          ))}
+      {showAnswersAtEnd && (
+        <div className="flex items-center justify-between border-b border-border/60 pb-3">
+          <div className="flex gap-2">
+            {(["all", "correct", "incorrect"] as const).map((type) => (
+              <button
+                key={type}
+                onClick={() => setFilter(type)}
+                className={`px-4 py-2 text-sm font-semibold capitalize rounded-lg transition-all cursor-pointer ${
+                  filter === type
+                    ? "bg-primary text-white"
+                    : "text-text/65 hover:bg-border/20 hover:text-text"
+                }`}
+              >
+                {type} ({type === "all" ? questions.length : type === "correct" ? questions.filter(q => q.isCorrect).length : questions.filter(q => !q.isCorrect).length})
+              </button>
+            ))}
+          </div>
         </div>
-      </div>
+      )}
 
       {/* Questions list */}
       <div className="space-y-6">
-        {filteredQuestions.length > 0 ? (
-          filteredQuestions.map((q, idx) => (
+        {(showAnswersAtEnd ? filteredQuestions : questions).length > 0 ? (
+          (showAnswersAtEnd ? filteredQuestions : questions).map((q, idx) => (
             <Card key={q.id} hoverLift={false} className="border border-border bg-surface p-6 space-y-4">
               <div className="flex items-center justify-between">
                 <Badge variant="outline" className="text-[10px]">
@@ -190,13 +194,19 @@ export function StudentResultDetailView({
                   <Badge variant="warning" className="flex items-center gap-1 bg-amber-500/10 text-amber-500 border-amber-500/25">
                     <HelpCircle className="w-3.5 h-3.5" /> Skipped
                   </Badge>
-                ) : q.isCorrect ? (
-                  <Badge variant="success" className="flex items-center gap-1">
-                    <CheckCircle2 className="w-3.5 h-3.5" /> Correct
-                  </Badge>
+                ) : showAnswersAtEnd ? (
+                  q.isCorrect ? (
+                    <Badge variant="success" className="flex items-center gap-1">
+                      <CheckCircle2 className="w-3.5 h-3.5" /> Correct
+                    </Badge>
+                  ) : (
+                    <Badge variant="danger" className="flex items-center gap-1">
+                      <XCircle className="w-3.5 h-3.5" /> Incorrect
+                    </Badge>
+                  )
                 ) : (
-                  <Badge variant="danger" className="flex items-center gap-1">
-                    <XCircle className="w-3.5 h-3.5" /> Incorrect
+                  <Badge variant="outline" className="flex items-center gap-1 bg-primary/5 text-primary border-primary/20">
+                    <CheckCircle2 className="w-3.5 h-3.5" /> Answered
                   </Badge>
                 )}
               </div>
@@ -214,12 +224,19 @@ export function StudentResultDetailView({
                   let borderStyle = "border-border/60 text-text/60";
                   let indicator = null;
 
-                  if (isCorrectAnswer) {
-                    borderStyle = "border-green-500 bg-green-500/5 text-green-700 font-bold ring-1 ring-green-500";
-                    indicator = <CheckCircle2 className="w-4 h-4 text-green-500" />;
-                  } else if (isSelectedAnswer && q.selectedOptionIndex !== -1 && !q.isCorrect) {
-                    borderStyle = "border-red-500 bg-red-500/5 text-red-700 font-bold ring-1 ring-red-500";
-                    indicator = <XCircle className="w-4 h-4 text-red-500" />;
+                  if (showAnswersAtEnd) {
+                    if (isCorrectAnswer) {
+                      borderStyle = "border-green-500 bg-green-500/5 text-green-700 font-bold ring-1 ring-green-500";
+                      indicator = <CheckCircle2 className="w-4 h-4 text-green-500" />;
+                    } else if (isSelectedAnswer && q.selectedOptionIndex !== -1 && !q.isCorrect) {
+                      borderStyle = "border-red-500 bg-red-500/5 text-red-700 font-bold ring-1 ring-red-500";
+                      indicator = <XCircle className="w-4 h-4 text-red-500" />;
+                    }
+                  } else {
+                    if (isSelectedAnswer) {
+                      borderStyle = "border-primary bg-primary/5 text-primary font-bold ring-1 ring-primary";
+                      indicator = <CheckCircle2 className="w-4 h-4 text-primary" />;
+                    }
                   }
 
                   return (
@@ -240,7 +257,7 @@ export function StudentResultDetailView({
               </div>
 
               {/* Explanation section */}
-              {q.explanation && (
+              {showAnswersAtEnd && q.explanation && (
                 <div className="p-4 rounded-lg bg-primary/5 border border-border/80 text-xs text-text/80 leading-relaxed mt-4 flex items-start gap-2">
                   <HelpCircle className="w-4 h-4 text-primary shrink-0 mt-0.5" />
                   <div>
