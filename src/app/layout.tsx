@@ -15,8 +15,26 @@ const playfair = Playfair_Display({
   display: "swap",
 });
 
+const getMetadataBase = (): URL => {
+  const url = process.env.NEXT_PUBLIC_APP_URL;
+  if (url && url.trim() !== "") {
+    try {
+      if (url.startsWith("http://") || url.startsWith("https://")) {
+        return new URL(url);
+      }
+      return new URL(`https://${url}`);
+    } catch {
+      // Ignore error and fallback
+    }
+  }
+  if (process.env.VERCEL_URL) {
+    return new URL(`https://${process.env.VERCEL_URL}`);
+  }
+  return new URL("https://duaa-academy.vercel.app");
+};
+
 export const metadata: Metadata = {
-  metadataBase: new URL(process.env.NEXT_PUBLIC_APP_URL || "https://duaa-academy.vercel.app"),
+  metadataBase: getMetadataBase(),
   title: "Duaa Academy | Mirpur Mathelo",
   description: "Your Future. Our Commitment. Your Success. 20 Years of Educational Excellence in Mirpur Mathelo.",
   manifest: "/manifest.json",

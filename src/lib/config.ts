@@ -12,14 +12,14 @@ let env: z.infer<typeof envSchema>;
 if (typeof window === "undefined") {
   // Normalize NEXTAUTH_URL with protocol support and Vercel fallbacks
   let nextAuthUrl = process.env.NEXTAUTH_URL;
-  if (!nextAuthUrl) {
+  if (!nextAuthUrl || nextAuthUrl.trim() === "") {
     if (process.env.VERCEL_URL) {
       nextAuthUrl = `https://${process.env.VERCEL_URL}`;
     } else {
       nextAuthUrl = "http://localhost:3000";
     }
   } else if (!nextAuthUrl.startsWith("http://") && !nextAuthUrl.startsWith("https://")) {
-    nextAuthUrl = `https://${nextAuthUrl}`;
+    nextAuthUrl = `https://${nextAuthUrl.trim()}`;
   }
 
   // Provide safe build-time fallbacks to prevent Next.js build-phase crashes
