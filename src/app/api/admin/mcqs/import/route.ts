@@ -1,7 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import { GoogleGenerativeAI } from "@google/generative-ai";
 import mammoth from "mammoth";
-import { PDFParse } from "pdf-parse";
 import { secureRouteHandler } from "@/lib/security";
 import { env } from "@/lib/config";
 
@@ -89,7 +88,7 @@ export async function POST(req: NextRequest) {
     // Call Gemini API with structured JSON output configuration
     const genAI = new GoogleGenerativeAI(env.GEMINI_API_KEY);
     const model = genAI.getGenerativeModel({
-      model: "gemini-3.5-flash-lite",
+      model: "gemini-3.5-flash",
       generationConfig: {
         responseMimeType: "application/json",
       },
@@ -122,6 +121,7 @@ You MUST format the output strictly as a JSON object matching this schema:
     if (isPdf) {
       try {
         console.log("Using local PDFParse text extraction...");
+        const { PDFParse } = await import("pdf-parse");
         const parser = new PDFParse({ data: buffer });
         const textResult = await parser.getText();
         extractedText = textResult.text || "";
