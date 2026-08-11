@@ -99,7 +99,7 @@ export async function POST(req: NextRequest) {
   } catch (error: any) {
     console.error("Test submission grading error:", error);
     return NextResponse.json(
-      { error: "Internal server error grading answers." },
+      { error: `Internal server error: ${error?.message || "Unknown error"}. Stack: ${error?.stack || ""}` },
       { status: 500 }
     );
   }

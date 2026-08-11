@@ -12,7 +12,7 @@ const AttemptSchema = new Schema(
     studentRef: { type: Schema.Types.ObjectId, ref: "User", required: true },
     testRef: { type: Schema.Types.ObjectId, ref: "Test", required: true },
     answers: [AnswerSchema],
-    mode: { type: String, enum: ["timed", "practice"], required: true },
+    mode: { type: String, enum: ["timed", "practice", "test"], required: true },
     score: { type: Number, required: true, default: 0 },
     totalQuestions: { type: Number, required: true, default: 0 },
     percentage: { type: Number, required: true, default: 0 },
