@@ -1,7 +1,7 @@
 import { withAuth } from "next-auth/middleware";
 import { NextResponse } from "next/server";
 
-export default withAuth(
+const authProxy = withAuth(
   function middleware(req) {
     const token = req.nextauth.token;
     const path = req.nextUrl.pathname;
@@ -37,6 +37,10 @@ export default withAuth(
     },
   }
 );
+
+export default function proxy(req: any, event: any) {
+  return authProxy(req, event);
+}
 
 export const config = {
   matcher: [
