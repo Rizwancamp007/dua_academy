@@ -2,7 +2,7 @@ import mongoose, { Schema } from "mongoose";
 
 const AnswerSchema = new Schema({
   mcqId: { type: Schema.Types.ObjectId, ref: "MCQ", required: true },
-  selectedIndex: { type: Number, min: 0, max: 3 },
+  selectedIndex: { type: Number, min: -1, max: 3 },
   correct: { type: Boolean, required: true },
   timeTakenSec: { type: Number, default: 0 },
 });
