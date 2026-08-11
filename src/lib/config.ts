@@ -40,6 +40,12 @@ if (typeof window === "undefined") {
     console.error("❌ Invalid environment variables:", parsed.error.format());
     throw new Error("CRITICAL: Missing or invalid environment variables. The application cannot boot.");
   }
+
+  // Mutate process.env to ensure external libraries read the parsed/fallback values
+  process.env.MONGODB_URI = parsed.data.MONGODB_URI;
+  process.env.NEXTAUTH_SECRET = parsed.data.NEXTAUTH_SECRET;
+  process.env.GEMINI_API_KEY = parsed.data.GEMINI_API_KEY;
+
   env = parsed.data;
 } else {
   env = {} as any;
