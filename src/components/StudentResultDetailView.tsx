@@ -212,8 +212,18 @@ export function StudentResultDetailView({
               </div>
 
               <h4 className="font-serif font-bold text-text leading-relaxed">
-                {q.questionText}
+                {q.questionText || q.question}
               </h4>
+
+              {q.questionImage && (
+                <div className="my-3 rounded-lg overflow-hidden border border-border/80 bg-surface/50 p-2 flex justify-center">
+                  <img
+                    src={q.questionImage}
+                    alt="Question Diagram"
+                    className="max-h-60 w-auto object-contain rounded"
+                  />
+                </div>
+              )}
 
               {/* Options */}
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 pt-2">

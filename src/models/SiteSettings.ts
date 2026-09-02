@@ -7,6 +7,14 @@ const SiteSettingsSchema = new Schema(
     admissionsOpen: { type: Boolean, default: true },
     whatsappNumber: { type: String, default: "0333-5524440" },
     address: { type: String, default: "Ikhlas Model High School, Mirpur Mathelo" },
+    directorName: { type: String, default: "Sir Rizwan Khan" },
+    directorTitle: { type: String, default: "Founder & Managing Director" },
+    directorMessage: {
+      type: String,
+      default:
+        "Welcome to Duaa Academy. For over two decades, our mission has been to deliver conceptual clarity, structured test pacing, and academic confidence to matric, intermediate, and competitive test candidates in Mirpur Mathelo.",
+    },
+    directorImage: { type: String, default: "/brand/placeholder.jpg" },
   },
   { timestamps: true }
 );

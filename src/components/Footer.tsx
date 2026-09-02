@@ -55,7 +55,7 @@ export function Footer() {
           {/* Quick Links */}
           <div>
             <h4 className="font-serif text-base font-bold mb-4 border-b border-border/50 pb-2">Quick Links</h4>
-            <ul className="space-y-2 text-sm text-text/70">
+            <ul className="grid grid-cols-2 gap-x-4 gap-y-2 text-sm text-text/70">
               <li>
                 <Link href="/" className="hover:text-primary transition-colors">Home</Link>
               </li>
@@ -66,16 +66,16 @@ export function Footer() {
                 <Link href="/lectures" className="hover:text-primary transition-colors">Lectures</Link>
               </li>
               <li>
-                <Link href="/faculty" className="hover:text-primary transition-colors">Faculty Profiles</Link>
+                <Link href="/faculty" className="hover:text-primary transition-colors">Faculty</Link>
               </li>
               <li>
-                <Link href="/wall-of-honor" className="hover:text-primary transition-colors">Wall of Honor</Link>
+                <Link href="/wall-of-honor" className="hover:text-primary transition-colors">Honor Wall</Link>
               </li>
               <li>
-                <Link href="/gallery" className="hover:text-primary transition-colors">Media Gallery</Link>
+                <Link href="/gallery" className="hover:text-primary transition-colors">Gallery</Link>
               </li>
               <li>
-                <Link href="/contact" className="hover:text-primary transition-colors">Contact Page</Link>
+                <Link href="/contact" className="hover:text-primary transition-colors">Contact</Link>
               </li>
             </ul>
           </div>
@@ -83,29 +83,21 @@ export function Footer() {
           {/* Contacts info */}
           <div>
             <h4 className="font-serif text-base font-bold mb-4 border-b border-border/50 pb-2">Get in Touch</h4>
-            <div className="space-y-4 text-sm text-text/70">
+            <div className="space-y-3 text-sm text-text/70">
               <div className="flex items-start space-x-2">
                 <MapPin className="w-4 h-4 text-primary shrink-0 mt-0.5" />
-                <span>Ikhlas Model High School, Mirpur Mathelo</span>
+                <span className="text-xs">Ikhlas Model High School, Mirpur Mathelo</span>
               </div>
-              <div className="flex items-start space-x-2">
-                <Mail className="w-4 h-4 text-primary shrink-0 mt-0.5" />
-                <a href="mailto:duaacademymirpur@gmail.com" className="hover:underline">duaacademymirpur@gmail.com</a>
+              <div className="flex items-center space-x-2">
+                <Mail className="w-4 h-4 text-primary shrink-0" />
+                <a href="mailto:duaacademymirpur@gmail.com" className="hover:underline text-xs">duaacademymirpur@gmail.com</a>
               </div>
-              <div className="flex items-start space-x-2">
+              <div className="flex items-start space-x-2 pt-1">
                 <Phone className="w-4 h-4 text-primary shrink-0 mt-0.5" />
-                <div className="flex flex-col space-y-1">
-                  {contactNumbers.slice(0, 3).map((num) => (
+                <div className="grid grid-cols-2 gap-x-3 gap-y-1 text-xs text-text/80 font-mono">
+                  {contactNumbers.map((num) => (
                     <span key={num}>{num}</span>
                   ))}
-                  <details className="cursor-pointer select-none">
-                    <summary className="text-primary hover:underline text-xs">Show more</summary>
-                    <div className="flex flex-col space-y-1 pt-1">
-                      {contactNumbers.slice(3).map((num) => (
-                        <span key={num}>{num}</span>
-                      ))}
-                    </div>
-                  </details>
                 </div>
               </div>
             </div>

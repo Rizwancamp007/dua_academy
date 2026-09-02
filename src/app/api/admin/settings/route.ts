@@ -11,6 +11,10 @@ const settingsPutSchema = z.object({
   admissionsOpen: z.boolean(),
   whatsappNumber: z.string().min(5, "WhatsApp number is required"),
   address: z.string().min(5, "Address is required"),
+  directorName: z.string().optional().default("Sir Rizwan Khan"),
+  directorTitle: z.string().optional().default("Founder & Managing Director"),
+  directorMessage: z.string().optional().default(""),
+  directorImage: z.string().optional().default("/brand/placeholder.jpg"),
 });
 
 const rolePatchSchema = z.object({
@@ -54,7 +58,7 @@ export async function PUT(req: NextRequest) {
 
   try {
     await dbConnect();
-    const { commenceDate, classTimings, admissionsOpen, whatsappNumber, address } = security.data;
+    const { commenceDate, classTimings, admissionsOpen, whatsappNumber, address, directorName, directorTitle, directorMessage, directorImage } = security.data;
 
     let settings = await SiteSettings.findOne();
     if (!settings) {
@@ -66,6 +70,10 @@ export async function PUT(req: NextRequest) {
     settings.admissionsOpen = admissionsOpen;
     settings.whatsappNumber = whatsappNumber;
     settings.address = address;
+    settings.directorName = directorName;
+    settings.directorTitle = directorTitle;
+    settings.directorMessage = directorMessage;
+    settings.directorImage = directorImage;
 
     await settings.save();
 

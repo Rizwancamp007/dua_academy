@@ -10,6 +10,7 @@ import { z } from "zod";
 const mcqFormSchema = z.object({
   id: z.string().optional(),
   question: z.string().min(2, "Question is too short"),
+  questionImage: z.string().optional().default(""),
   options: z.array(z.string().min(1, "Option cannot be empty")).length(4, "Exactly 4 options are required"),
   correctIndex: z.number().int().min(0).max(3, "Correct option index must be between 0 and 3"),
   explanation: z.string().optional().default(""),
@@ -105,11 +106,12 @@ export async function POST(req: NextRequest) {
 
   try {
     await dbConnect();
-    const { question, options, correctIndex, explanation, classRef, streamRef, subjectRef, difficulty, status } = security.data;
+    const { question, questionImage, options, correctIndex, explanation, classRef, streamRef, subjectRef, difficulty, status } = security.data;
     const userId = (security.user as any).id;
 
     const newMcq = await MCQ.create({
       question,
+      questionImage,
       options,
       correctIndex,
       explanation,
@@ -141,7 +143,7 @@ export async function PUT(req: NextRequest) {
 
   try {
     await dbConnect();
-    const { id, question, options, correctIndex, explanation, classRef, streamRef, subjectRef, difficulty, status } = security.data;
+    const { id, question, questionImage, options, correctIndex, explanation, classRef, streamRef, subjectRef, difficulty, status } = security.data;
 
     if (!id) {
       return NextResponse.json({ error: "MCQ ID is required for updates" }, { status: 400 });
@@ -151,6 +153,7 @@ export async function PUT(req: NextRequest) {
       id,
       {
         question,
+        questionImage,
         options,
         correctIndex,
         explanation,

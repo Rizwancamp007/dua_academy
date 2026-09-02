@@ -279,9 +279,19 @@ export function StudentTestRunner({ testId, testTitle, durationMinutes, question
             </Button>
           </div>
 
-          <h3 className="font-serif text-lg sm:text-xl font-bold mb-8 text-text leading-relaxed">
-            {currentQuestion.questionText}
+          <h3 className="font-serif text-lg sm:text-xl font-bold mb-6 text-text leading-relaxed">
+            {currentQuestion.questionText || currentQuestion.question}
           </h3>
+
+          {currentQuestion.questionImage && (
+            <div className="mb-6 rounded-xl overflow-hidden border border-border bg-surface/50 p-3 flex justify-center">
+              <img
+                src={currentQuestion.questionImage}
+                alt="Question Diagram"
+                className="max-h-72 w-auto object-contain rounded-lg"
+              />
+            </div>
+          )}
 
           {/* Options List */}
           <div className="space-y-4 mb-8">

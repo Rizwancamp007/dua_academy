@@ -606,6 +606,29 @@ export default function AdminMCQListView({ classes, streams, subjects }: AdminMC
                   />
                 </div>
 
+                {/* Question Diagram / Image URL (Optional) */}
+                <div className="space-y-1.5">
+                  <label className="text-xs font-semibold uppercase tracking-wider text-text/60">
+                    Question Diagram/Chart Image URL (Optional)
+                  </label>
+                  <input
+                    type="text"
+                    value={formMcq.questionImage || ""}
+                    onChange={(e) => handleFormChange("questionImage", e.target.value)}
+                    placeholder="e.g. /brand/diagram.png or https://..."
+                    className="w-full h-10 rounded-lg border border-border bg-surface px-3 py-2 text-sm text-text focus:outline-none focus:ring-2 focus:ring-secondary/50"
+                  />
+                  {formMcq.questionImage && (
+                    <div className="mt-2 p-2 rounded-lg border border-border bg-bg/50 flex items-center justify-center max-h-40 overflow-hidden">
+                      <img
+                        src={formMcq.questionImage}
+                        alt="Question Diagram Preview"
+                        className="max-h-36 object-contain rounded"
+                      />
+                    </div>
+                  )}
+                </div>
+
                 {/* Options 4 Options */}
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                   {(formMcq.options || ["", "", "", ""]).map((opt: string, idx: number) => (

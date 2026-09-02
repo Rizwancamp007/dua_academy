@@ -3,6 +3,7 @@ import mongoose, { Schema } from "mongoose";
 const MCQSchema = new Schema(
   {
     question: { type: String, required: true },
+    questionImage: { type: String, default: "" },
     options: {
       type: [String],
       required: true,

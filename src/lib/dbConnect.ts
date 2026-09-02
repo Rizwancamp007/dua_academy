@@ -31,9 +31,6 @@ async function dbConnect() {
 
   try {
     cached.conn = await cached.promise;
-    // Dynamically seed database on first handshake to avoid circular imports
-    const { seedDatabase } = require("./seed");
-    await seedDatabase();
   } catch (e) {
     cached.promise = null;
     throw e;

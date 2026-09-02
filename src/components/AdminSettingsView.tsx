@@ -13,6 +13,10 @@ interface SettingsData {
   admissionsOpen: boolean;
   whatsappNumber: string;
   address: string;
+  directorName?: string;
+  directorTitle?: string;
+  directorMessage?: string;
+  directorImage?: string;
 }
 
 interface StaffUser {
@@ -284,6 +288,59 @@ export default function AdminSettingsView({
               <label htmlFor="admissionsOpen" className="text-sm font-semibold uppercase tracking-wider text-text/75 cursor-pointer">
                 Open Online Registrations (Enable registration form)
               </label>
+            </div>
+          </Card>
+
+          {/* Director's Message Management */}
+          <Card hoverLift={false} className="p-6 border border-border space-y-6">
+            <h3 className="font-serif text-lg font-bold border-b border-border/50 pb-2">
+              Director's Message & Leadership (About Page)
+            </h3>
+
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
+              <div className="space-y-1.5">
+                <label className="text-sm font-medium text-text/80">Director Name</label>
+                <input
+                  type="text"
+                  value={settings.directorName || ""}
+                  onChange={(e) => setSettings({ ...settings, directorName: e.target.value })}
+                  placeholder="e.g. Sir Rizwan Khan"
+                  className="w-full h-10 rounded-lg border border-border bg-surface px-3 py-2 text-sm text-text focus:outline-none focus:ring-2 focus:ring-secondary/50"
+                />
+              </div>
+
+              <div className="space-y-1.5">
+                <label className="text-sm font-medium text-text/80">Designation / Title</label>
+                <input
+                  type="text"
+                  value={settings.directorTitle || ""}
+                  onChange={(e) => setSettings({ ...settings, directorTitle: e.target.value })}
+                  placeholder="e.g. Founder & Managing Director"
+                  className="w-full h-10 rounded-lg border border-border bg-surface px-3 py-2 text-sm text-text focus:outline-none focus:ring-2 focus:ring-secondary/50"
+                />
+              </div>
+            </div>
+
+            <div className="space-y-1.5">
+              <label className="text-sm font-medium text-text/80">Director Photo Image URL</label>
+              <input
+                type="text"
+                value={settings.directorImage || ""}
+                onChange={(e) => setSettings({ ...settings, directorImage: e.target.value })}
+                placeholder="e.g. /brand/director.jpg or https://..."
+                className="w-full h-10 rounded-lg border border-border bg-surface px-3 py-2 text-sm text-text focus:outline-none focus:ring-2 focus:ring-secondary/50"
+              />
+            </div>
+
+            <div className="space-y-1.5">
+              <label className="text-sm font-medium text-text/80">Director's Full Message Statement</label>
+              <textarea
+                value={settings.directorMessage || ""}
+                onChange={(e) => setSettings({ ...settings, directorMessage: e.target.value })}
+                rows={5}
+                placeholder="Enter the official message statement to display on the About Us page..."
+                className="w-full rounded-lg border border-border bg-surface px-3 py-2 text-sm text-text focus:outline-none focus:ring-2 focus:ring-secondary/50"
+              />
             </div>
           </Card>
 
