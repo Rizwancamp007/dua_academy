@@ -22,6 +22,7 @@ import {
 interface MCQData {
   _id: string;
   questionText: string;
+  questionImage?: string;
   options: string[];
   correctOptionIndex: number;
   explanation?: string;
@@ -280,7 +281,7 @@ export function StudentTestRunner({ testId, testTitle, durationMinutes, question
           </div>
 
           <h3 className="font-serif text-lg sm:text-xl font-bold mb-6 text-text leading-relaxed">
-            {currentQuestion.questionText || currentQuestion.question}
+            {currentQuestion.questionText}
           </h3>
 
           {currentQuestion.questionImage && (

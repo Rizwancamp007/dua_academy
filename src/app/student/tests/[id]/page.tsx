@@ -45,6 +45,7 @@ export default async function StudentTestRunnerPage({ params, searchParams }: Pa
       .map((q: any) => ({
         _id: q._id ? q._id.toString() : "",
         questionText: q.question || "",
+        questionImage: q.questionImage || "",
         options: q.options || [],
         correctOptionIndex: typeof q.correctIndex === "number" ? q.correctIndex : 0,
         explanation: q.explanation || "",

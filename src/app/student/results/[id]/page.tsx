@@ -58,6 +58,7 @@ export default async function StudentResultDetailPage({ params }: PageProps) {
     questionsList.push({
       id: mcq._id.toString(),
       questionText: mcq.question,
+      questionImage: mcq.questionImage || "",
       options: mcq.options || [],
       correctOptionIndex: mcq.correctIndex,
       selectedOptionIndex: ans.selectedIndex,

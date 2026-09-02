@@ -10,6 +10,7 @@ import Link from "next/link";
 interface ReviewQuestion {
   id: string;
   questionText: string;
+  questionImage?: string;
   options: string[];
   correctOptionIndex: number;
   selectedOptionIndex: number;
@@ -212,7 +213,7 @@ export function StudentResultDetailView({
               </div>
 
               <h4 className="font-serif font-bold text-text leading-relaxed">
-                {q.questionText || q.question}
+                {q.questionText}
               </h4>
 
               {q.questionImage && (
